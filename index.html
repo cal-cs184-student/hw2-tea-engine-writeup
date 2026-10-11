@@ -105,12 +105,11 @@
 			<p>
 			Casteljau's algorithm is able to extend to Bezier surfaces with the use of a n x n sized 2-dimensional vector filled with control points that represent a grid-like surface that has control points that control the surface's geometry.
 </p>
-
 			<p>
 			Using bezier curves (fundamentally 1D objects) we can construct a 2d surface by having multiple bezier curves adjacent to each other and interpolate between them, effectively creating a 2d shape that has both width and height. This is exactly how Casteljau's algorithm extends to bezier surfaces, but instead of using a t-value to progress from the start and end of the line, we use a u and v value to interpolate across the surface, with the u being progression across the "x-axis" of the surface and v being across the "y-axis".
 			</p>
 			<figure>
-				<img src="assets/Section_1/utah.png" alt="utahteapot" style="width:50%"/>
+				<img src="assets/Section_2/utah.png" alt="utahteapot" style="width:50%"/>
 				<figcaption>Bezier Surface Utah Teapot</figcaption>
 			</figure>
 			<p>
@@ -122,9 +121,23 @@
 		<h2>Section II: Triangle Meshes and Half-Edge Data Structure</h2>
 
 		<h3>Part 3: Area-weighted vertex normals</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-		<h3>Part 4: Edge flip</h3>
+			<p>To implement area-weighted vertex normals, we computed the normals and areas of all triangles the vertex is a part of. Then, we took an average of said normal values weighted by the area of each triangle. We found all faces by starting with the halfedge associated with the vertex, and calling twin and next to get the next halfedge (which tells us the face/triangle), terminating when the original halfedge we started with is reached. For each triangle, we computed the area by taking the norm of the cross product of two sides of the triangle, each obtained by finding the difference between two vertices on the triangle. To do the final vertex normal calculation, we divided all of the areas by the total area, and added the weight times the normal value to the vertex normal value.
+			</p>
+			<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					<tr>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/no_vertex_normals.png" width="400px"/>
+							<figcaption>No Vertex Normals</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/vertex_normals.png" width="400px"/>
+							<figcaption>Vertex Normals</figcaption>
+						</td>
+					</tr>
+				</table>
+</div>
+			<h3>Part 4: Edge flip</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
 		<h3>Part 5: Edge split</h3>
