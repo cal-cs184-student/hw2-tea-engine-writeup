@@ -138,8 +138,28 @@
 				</table>
 </div>
 			<h3>Part 4: Edge flip</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
+		<p>The mesh is composed of many triangles with each edge being connected to 2 other triangles (as long as they are not boundary edges) and as a result we can imagine the two triangles together as a quadrilateral with an edge dividing them. The edge flip aims to take the splitting edge across the two vertices and split the triangle along the other two vertices of the "quadrilateral" and this was the approach we took towards implementing the edge flip. 
+	</p>
+				<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					<tr>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/no_edgeflips.png" width="400px"/>
+							<figcaption>No Edgeflips</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/edgeflips.png" width="400px"/>
+							<figcaption>Edgeflips</figcaption>
+						</td>
+					</tr>
+				</table>
+</div>
+		<p>In our implementation we reassign the specified flip edge's vertices to the neighboring vertices such that they are on opposite sides of the 2 triangles (and not the original vertices) with a statement like this: 
+</p>
+<code>orignalVertex->next()->next()->vertex();</code>
+<p>Then subsequently we update and reassign each half edge's properties (namely the next, twin, vertex, edge and face properties) for the affected half-edges such that they align with the edge starting and ending at the resulting vertices, maintaining the connectivity of the half-edges. </p>
+<p>The surprisingly simple and interesting implementation "trick" we had to use was we had to pull out pen and paper as well as an online whiteboard several times to draw and track what value each half edge, face and vertex had after the resulting flip. We found this to be particularly useful even for debugging purposes as we were able to track down bugs in our logic after seeing mistakenly assigned iterators. 
+</p>
 		<h3>Part 5: Edge split</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
