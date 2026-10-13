@@ -160,8 +160,30 @@
 <p>Then subsequently we update and reassign each half edge's properties (namely the next, twin, vertex, edge and face properties) for the affected half-edges such that they align with the edge starting and ending at the resulting vertices, maintaining the connectivity of the half-edges. </p>
 <p>The surprisingly simple and interesting implementation "trick" we had to use was we had to pull out pen and paper as well as an online whiteboard several times to draw and track what value each half edge, face and vertex had after the resulting flip. We found this to be particularly useful even for debugging purposes as we were able to track down bugs in our logic after seeing mistakenly assigned iterators. 
 </p>
+<p>Debugging Journey: A couple of hours spent drawing (on paper) and redrawing the example transformation, referencing the primer and details on the CS184 slides and extensive scrutinization of the comments in the halfEdgeMesh header file in order to figure out what properties and details for the data structures! </p>
 		<h3>Part 5: Edge split</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+						<div style="display: flex; flex-direction: column; align-items: center;">
+				<table style="width: 100%; text-align: center; border-collapse: collapse;">
+					<tr>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/no_edgeflips.png" width="400px"/>
+							<figcaption>Normal Bean</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/edgesplits.png" width="400px"/>
+							<figcaption>Edge Splits</figcaption>
+						</td>
+						<td style="text-align: center;">
+							<img src="assets/Section_2/edgeflips_splits.png" width="400px"/>
+							<figcaption>Edge Splits and Flips</figcaption>
+						</td>
+					</tr>
+				</table>
+</div>
+		<p>Similar to the edge flip operation, implementation primarily consisted of mapping out exactly how halfedges, faces, vertices and edges iterators should be reassigned; however with edge splits in particular we had to create 2 new faces, 6 half edges, and one new vertex on top of reassigning the existing ones to morph into the resulting transformation. 
+</p>
+<p>To handle everything and make minimal errors (we had learned my lesson from the previous part), to first write and plan everything out drawing the original triangle (before split) and the resulting triangle, mapping the existing halfedges and marking the new ones in the resulting operation. This helped a lot with getting the logic down but towards the end we did run into some segmentation faults which after some further inspection of the code we discovered that we were setting some of the halfedge's properties to properties that had not yet been defined yet, especially with the new generated halfedges, we solved this by caching the initial vertex, face and halfedge values we needed to ensure that they had been defined. 
+</p>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
 		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
