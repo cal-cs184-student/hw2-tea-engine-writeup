@@ -80,17 +80,21 @@
 				<td style="text-align: center;">
 				  <img src="assets/Section_1/2_subdivision.png" width="400px"/>
 				  <figcaption>Step 2</figcaption>
+			  </tr>
+			  <tr>
 				</td>
 				  <td style="text-align: center;">
 					  <img src="assets/Section_1/3_subdivision.png" width="400px"/>
 					  <figcaption>Step 3</figcaption>
 				  </td>
-			  </tr>
-			  <tr>
+			  
+			
 				  <td style="text-align: center;">
 					  <img src="assets/Section_1/4_subdivision.png" width="400px"/>
 					  <figcaption>Step 4</figcaption>
 				  </td>
+			  </tr>
+				<tr>
 				  <td style="text-align: center;">
 					  <img src="assets/Section_1/5_subdivision.png" width="400px"/>
 					  <figcaption>Step 5</figcaption>
@@ -167,7 +171,7 @@
 <p>Then subsequently we update and reassign each half edge's properties (namely the next, twin, vertex, edge and face properties) for the affected half-edges such that they align with the edge starting and ending at the resulting vertices, maintaining the connectivity of the half-edges. </p>
 <p>The surprisingly simple and interesting implementation "trick" we had to use was we had to pull out pen and paper as well as an online whiteboard several times to draw and track what value each half edge, face and vertex had after the resulting flip. We found this to be particularly useful even for debugging purposes as we were able to track down bugs in our logic after seeing mistakenly assigned iterators. 
 </p>
-<p>Debugging Journey: A couple of hours spent drawing (on paper) and redrawing the example transformation, referencing the primer and details on the CS184 slides and extensive scrutinization of the comments in the halfEdgeMesh header file in order to figure out what properties and details for the data structures! </p>
+<p>Debugging Journey: A couple of hours spent drawing (on paper) and redrawing the example transformation, referencing the primer and details on the CS184 slides and extensive scrutinization of the comments in the halfEdgeMesh header file in order to figure out what properties and details for the data structures! We were particularly stumped at the degenerate cases, since they produced weird looking polygons when rendered, but by tracing the memory addresses and looking at the degrees, as well as drawing it out, we were able to confirm the accuracy of our splits. </p>
 		<h3>Part 5: Edge split</h3>
 						<div style="display: flex; flex-direction: column; align-items: center;">
 				<table style="width: 100%; text-align: center; border-collapse: collapse;">
@@ -222,7 +226,7 @@
 			</table>
 		</div>
 
-		<p>The effect of loop subdivision is most apparent on corners and edges. Since the weighting algorithm updates positions based on neighbors and corners that jut out of the object have further neighbors, these features become rapidly collapsed inward upon loop subdivision (aggressive smoothing). For the cube in particular, we can see the effect of the weighting in position updates, since weighting depends on the degree of a vertex, the cube, represented by triangles, will have some vertices with more edges coming out of them, leading to more aggressive inward smoothing compared to vertices with less degree. We can even this out by pre-splitting the triangles on the faces of the cube, leading to the same degree for each vertex, and thus the same treatment when determining new positions for old vertices.</p>
+		<p>The effect of loop subdivision is most apparent on corners and edges. Since the weighting algorithm updates positions based on neighbors and corners that jut out of the object have further neighbors, these features become rapidly collapsed inward upon loop subdivision (aggressive smoothing). We can reduce this effect by using mesh edit operations (split and flip) to reduce the distance between vertices prematurely, leading to a more even descent into smoothness. For the cube in particular, we can see the effect of the weighting in position updates, since weighting depends on the degree of a vertex, the cube, represented by triangles, will have some vertices with more edges coming out of them, leading to more aggressive inward smoothing compared to vertices with less degree. We can even this out by pre-splitting the triangles on the faces of the cube, leading to the same degree for each vertex, and thus the same treatment when determining new positions for old vertices.</p>
 
 		
 		<div style="display: flex; flex-direction: column; align-items: center;">
