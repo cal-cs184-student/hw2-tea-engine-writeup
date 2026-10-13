@@ -193,21 +193,55 @@
 </p>
 
 		<h3>Part 6: Loop subdivision for mesh upsampling</h3>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p> We implemented loop subdivision by first computing and storing the positions of where the vertices should be after the update occurs. Then we iterate through all edges to perform split operations, keeping track of which edges are created in this process for later. New edges were being added in this process, so we had to read the amount of edges before starting the iteration loop to prevent it from splitting forever, we knew this would not skip edges since new edges are appended at the end of the iterator. The new vertices positions are set here too since the vertex positions were associated with the edge, so assigning the positions just reads off of the edge that was just split. Then we flip all new edges that connect old vertices with new vertices and finally put in the new positions for all old vertices, resulting in the correct final upscaled mesh.</p>
 
-		<h2>(Optional) Section III: Potential Extra Credit - Art Competition: Model something Creative</h2>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+		<p>Meshes become “smoother” after loop subdivision. The lower poly meshes became more and more like their smoother real life counterparts with more loop subdivision, but also drastically slowed the program down as there were many more tries on screen.</p>
 
-		<h2>Additional Notes (please remove)</h2>
-		<ul>
-			<li>You can also add code if you'd like as so: <code>code code code</code></li>
-			<li>If you'd like to add math equations, 
-				<ul>
-					<li>You can write inline equations like so: \( a^2 + b^2 = c^2 \)</li>
-					<li>You can write display equations like so: \[ a^2 + b^2 = c^2 \]</li>
-				</ul>
-			</li>
-		</ul>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/1.png" width="400px"/>
+				  <figcaption>teapot before upsampling</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/2.png" width="400px"/>
+				  <figcaption>teapot after upsampling</figcaption>
+				</td>
+			  </tr>
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/3.png" width="400px"/>
+				  <figcaption>cow before upsampling</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/4.png" width="400px"/>
+				  <figcaption>cow after upsampling</figcaption>
+				</td>
+			  </tr>
+			</table>
 		</div>
+
+		<p>The effect of loop subdivision is most apparent on corners and edges. Since the weighting algorithm updates positions based on neighbors and corners that jut out of the object have further neighbors, these features become rapidly collapsed inward upon loop subdivision (aggressive smoothing). For the cube in particular, we can see the effect of the weighting in position updates, since weighting depends on the degree of a vertex, the cube, represented by triangles, will have some vertices with more edges coming out of them, leading to more aggressive inward smoothing compared to vertices with less degree. We can even this out by pre-splitting the triangles on the faces of the cube, leading to the same degree for each vertex, and thus the same treatment when determining new positions for old vertices.</p>
+
+		
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<table style="width: 100%; text-align: center; border-collapse: collapse;">
+			  <tr>
+				<td style="text-align: center;">
+				  <img src="assets/5.png" width="400px"/>
+				  <figcaption>cube upsampled without splitting first</figcaption>
+				</td>
+				<td style="text-align: center;">
+				  <img src="assets/6.png" width="400px"/>
+				  <figcaption>cube upsampled with splitting first</figcaption>
+				</td>
+			  </tr>
+			</table>
+		</div>
+
+
+
+		
 	</body>
 </html>
