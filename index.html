@@ -48,7 +48,14 @@
 		-->
 
 		<h2>Overview</h2>
-		Give a high-level overview of what you implemented in this homework. Think about what you've built as a whole. Share your thoughts on what interesting things you've learned from completing the homework.
+		<p>In this assignment we implemented 2 distinct ways to represent meshes: bezier curves and triangles with half edges. </p>
+
+<p>With bezier curves we used Casteljau's algorithm that used interpolation to create curves effectively. With bezier curves we define several control points with the first and last points being the start and end of the curve and the intermediate points used to define the derivative at the end points. We then extended individual bezier curves to creating surfaces using multiple bezier curves laid out next to each other and interpolating between these curves to create a surface, using values of U and V to draw out the points along the surface. 
+</p>
+	<p>On the other hand we also implemented triangles with half edges which are technically a greater cost in memory, but still prove helpful since bezier surfaces are notoriously difficult to get right representing meshes. In this assignment we didn't implement the data structure of the half edges and triangles, but we implemented certain manipulations of the data structure in order to create smooth shading by calculating vertex normals and operations such as edge flip, edge split in order to create loop subdivision for upsampling the mesh to become smoother. 
+</p>
+		<p>It's quite interesting how these two methods achieve the same goal while being completely different approaches and their benefits and downsides. It is particularly interesting that for representing meshes with bezier, they fare better for smoother surfaces since they are defined mathematically to be smooth. But for the triangle meshes since they started simplistic with minimal faces, we needed to implement per vertex normals to get them to look shaded properly unlike the triangle representation which looked low-poly before implementing per-vertex normals. Additionally in order for the triangle based representation to appear more smooth, we needed to loop subdivide, compared to bezier where we did not, since they're implemented with curves in mind. Another interesting thing we learned was the elegance of Casteljau's algorithm, where subdividing with a t-value interpolation would yield a proper bezier curve and how this could be used to interpolate between many different bezier curves to form surfaces. 
+</p>
 
 		<h2>Section I: Bezier Curves and Surfaces</h2>
 
